@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include<conio.h>
+#define MAX_SIZE 101
+int arr[MAX_SIZE];
+int top = -1;
+
+void IsEmpty()
+{
+	if (top == -1)
+	{
+		printf("Empty\n");
+	}
+	else
+	{
+		printf("The Array is Not Empty\n");
+	}
+}
+
+void Push(int x)
+{
+	if (top == MAX_SIZE)
+	{
+		printf("U can't insert element more than this .Increase the array Size");
+	}
+	else
+	{
+		top = top + 1;
+		arr[top] = x;
+	}
+}
+void Pop()
+{
+	if (top == -1)
+	{
+		printf("U can't delete element ,please insert and then delete");
+	}
+	else
+	{
+		top = top - 1;
+	}
+}
+void Front()
+{
+	if (top == -1)
+	{
+		printf("There are no elements");
+	}
+	else
+	{
+		printf("The front element is %d", arr[top]);
+	}
+}
+void Print()
+{
+	int i;
+	for (i = 0; i <= top; i++)
+	{
+		printf("%d\n", arr[i]);
+	}
+}
+void main()
+{
+
+
+	Push(5);
+	Push(2);
+	Push(3);
+	Push(7);
+	Print();
+	Pop();
+	Pop();
+	Pop();
+	Print();
+	IsEmpty();
+	Front();
+}
+
+
+

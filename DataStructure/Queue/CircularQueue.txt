@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<conio.h>
+#define MAX_SIZE 5
+int arr[MAX_SIZE];
+int top = -1;
+int rear = -1;
+void Enqueue(int x)
+{
+	if ((rear + 1) % MAX_SIZE == top)
+	{
+		printf("Array Exceeded the Max Limit");
+	}
+	if (top == -1 && rear == -1)
+	{
+		top = top + 1;
+		rear = rear + 1;
+		arr[top] = x;;
+	}
+	else
+	{
+		rear = (rear + 1) % MAX_SIZE;
+		arr[rear] = x;
+	}
+}
+void Dequeue()
+{
+	if (top == -1)
+	{
+		printf("Enter an element before deleting\n");
+	}
+	else
+	{
+		arr[top] = -1;
+		top = top + 1;
+	}
+}
+void IsEmpty()
+{
+	if (top == -1)
+	{
+		printf("Empty\n");
+	}
+	else
+	{
+		printf("Not Empty\n");
+	}
+
+}
+void Front()
+{
+	if (top == -1)
+	{
+		printf("Empty\n");
+	}
+	else
+	{
+		printf("%d", arr[top]);
+	}
+}
+void Print()
+{
+	printf("\n");
+	int i;
+	for (i = 0; i < MAX_SIZE; i++)
+	{
+		printf("%d\n", arr[i]);
+	}
+	printf("\n");
+}
+
+void main()
+{
+	Enqueue(5);
+	Enqueue(10);
+	Enqueue(15);
+	Enqueue(20);
+	Enqueue(25);
+	Print();
+	Dequeue();
+	Dequeue();
+	Print();
+	Enqueue(30);
+	Enqueue(50);
+	Dequeue();
+	Print();
+
+
+}
+

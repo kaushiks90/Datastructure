@@ -1,0 +1,91 @@
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}node;
+struct node* root = NULL;
+struct node* CreateNode(node* root, int value)
+{
+	struct node* temp = (struct node*)malloc(sizeof(struct node));
+	temp->data = value;
+	temp->left = NULL;
+	temp->right = NULL; 
+	root = temp;
+	return root;
+}
+void InOrder(struct node* root)
+{
+	if (root != NULL)
+	{
+		InOrder(root->left);
+		printf("%d \n", root->data);
+		InOrder(root->right);
+	}
+}
+int Max(int n1, int n2)
+{
+	if (n1 > n2)
+	{
+		return n1;
+	}
+	else
+	{
+		return n2;
+	}
+}
+int Min(int n1, int n2)
+{
+	if (n1 > n2)
+	{
+		return n2;
+	}
+	else
+	{
+		return n1;
+	}
+}
+
+struct node* FindLowestCommonAncestorBinarySearchTree(struct node* root, int n1, int n2)
+{
+		if (root->data > Max(n1, n2))
+		{
+		return	FindLowestCommonAncestorBinarySearchTree(root->left, n1, n2);
+		}
+		else if (root->data < Min(n1, n2))
+		{
+		return	FindLowestCommonAncestorBinarySearchTree(root->right, n1, n2);
+		}
+		else
+		{
+			return root;
+		}
+	
+}
+int main()
+{
+	root = CreateNode(root, 10);
+	root->left = CreateNode(root, -10);
+	root->right = CreateNode(root, 30);
+	root->right->left = CreateNode(root, 25);
+	root->right->left->right = CreateNode(root, 28);
+	root->right->right = CreateNode(root, 60);
+	root->right->right->right = CreateNode(root, 78);
+	root->left->right= CreateNode(root, 8);
+	root->left->right->left = CreateNode(root, 6);
+	root->left->right->right = CreateNode(root, 9);
+	InOrder(root);
+	//struct node* soln = FindLowestCommonAncestorBinarySearchTree(root, 6, 9);
+	struct node* soln = FindLowestCommonAncestorBinarySearchTree(root, 30, 78);
+	printf("\n%d\n", soln->data);
+
+	getchar();
+	return 0;
+}
+
+

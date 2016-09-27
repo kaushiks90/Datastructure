@@ -1,0 +1,87 @@
+
+
+#include "stdafx.h"
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* next;
+}node;
+struct node* head = NULL;
+void insert(int value)
+{
+	node* temp = (node *)malloc(sizeof(node));
+	temp->data = value;
+	if (head == NULL)
+	{
+
+		temp->next = NULL;
+
+	}
+	else
+	{
+
+		temp->next = head;
+
+	}
+	head = temp;
+}
+void print(struct node *head)
+{
+	node* temp = head;
+	if (temp == NULL)
+	{
+		return;
+	}
+
+	printf("%d ", temp->data);
+	print(temp->next);
+}
+void reverseiterative(struct node * head)
+{
+	struct node * current = head;
+	struct node * prev = NULL;
+	struct node* next;
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	head = prev;
+	print(head);
+}
+void reverseRecursive(struct node * p)
+{
+	if (head == NULL)
+	{
+		return;
+	}
+	while (p->next == NULL)
+	{
+		head = p;
+		print(p);
+		return;
+	}
+	reverseRecursive(p->next);
+	p->next->next = p;;
+	p->next = NULL;
+	//p->next = NULL;
+	print(p);
+}
+int main()
+{
+	insert(5);
+	insert(7);
+	insert(9);
+	insert(11);
+	print(head);
+	reverseRecursive(head);
+	getchar();
+	return 0;
+}
+

@@ -1,0 +1,84 @@
+
+#include "stdafx.h"
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}node;
+
+
+node* Insert(int data,struct node* root)
+{
+	struct node* temp = (node*)malloc(sizeof(struct node));
+	struct node* temphead = root;
+	struct node* parent = NULL;
+	temp->data = data;
+	temp->left = NULL;
+	temp->right = NULL;
+	if (root == NULL)
+	{
+		root = temp;
+		return root;
+	}
+	else
+	{
+		while (root != NULL)
+		{
+			parent = root;
+			if (root->data >= data)
+			{
+				root = root->left;
+			}
+			else
+			{
+				root = root->right;
+			}
+		}
+		if (parent->data <= data)
+		{
+			parent->right = temp;
+		}
+		else
+		{
+			parent->left = temp;
+		}
+	}
+	
+	return temphead;
+}
+void print(struct node* root)
+{
+	struct node* temp = root;
+	if (temp == NULL)
+	{
+		return;
+	}
+	printf("%d ,",temp->data);
+	print(temp->left);
+	print(temp->right);
+}
+int main()
+{
+	struct node* root = NULL;
+	root=Insert(9,root);
+	root = Insert(9, root); 
+	root = Insert(6, root);
+	root = Insert(3, root);
+	root = Insert(7, root);
+	root = Insert(1, root);
+	root = Insert(4, root);
+	root = Insert(8, root);
+	root = Insert(22, root);
+	root = Insert(20, root);
+	root = Insert(36, root);
+	root = Insert(32, root);
+	print(root);
+    getchar();
+	return 0;
+}
+

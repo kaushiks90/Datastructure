@@ -1,0 +1,48 @@
+
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}binarynode;
+
+struct node* root = NULL;
+struct node* Insert(int data)
+{
+	struct node *temp = (struct node *) malloc(sizeof(node));
+	temp->data = data;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
+}
+
+void PostOrder(struct node* root)
+{
+	if (root != NULL)
+	{
+		
+		PostOrder(root->left);
+		PostOrder(root->right);
+		printf("%d \n", root->data);
+	}
+}
+
+int main()
+{
+    root = Insert(10);
+	root->left = Insert(2);
+	root->left->left = Insert(6);
+	root->right = Insert(5);
+	root->right->left = Insert(8);
+	root->right->right = Insert(3);
+	PostOrder(root);
+	getchar();
+	return 0;
+}
+
+

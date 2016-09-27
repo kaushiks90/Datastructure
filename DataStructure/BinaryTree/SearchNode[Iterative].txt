@@ -1,0 +1,92 @@
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}node;
+struct node* root = NULL;
+struct node* Insert(int key, struct node * root)
+{
+	node *temp = root;
+	if (temp == NULL)
+	{
+		struct node *temp = (struct node *) malloc(sizeof(node));
+		temp->data = key;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+	}
+	else
+	{
+		if (key < temp->data)
+		{
+			temp->left = Insert(key, temp->left);
+		}
+		else
+		{
+			temp->right = Insert(key, temp->right);
+		}
+
+	}
+	return root;
+}
+struct node* SearchIterative(int key,struct node* root)
+{
+	while (root != NULL)
+	{
+		if (root->data == key)
+		{
+			break;
+			return root;
+		}
+		if (root->data > key)
+		{
+			root = root->left;
+		}
+		else
+		{
+			root = root->right;
+		}
+		
+	}
+	if (root == NULL)
+	{
+		return NULL;
+	}	
+}
+void InOrder(struct node* root)
+{
+	if (root != NULL)
+	{
+		InOrder(root->left);
+		printf("%d \n", root->data);
+		InOrder(root->right);
+	}
+}
+int main()
+{
+	int arr[] = { 20,-8,26,-3,9,24,28,6,11 };
+	for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	{
+		root = Insert(arr[i], root);
+	}
+	InOrder(root);
+	struct node* temp = SearchIterative(-100, root);
+	if (temp != NULL)
+	{
+		printf("Element found");
+	}
+	else
+	{
+		printf("Element not found");
+	}
+	getchar();
+	return 0;
+}
+
+

@@ -1,0 +1,64 @@
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}binarynode;
+int r = 0;
+int left = 0, right = 0;
+struct node* root = NULL;
+struct node* Insert(int data)
+{
+	struct node *temp = (struct node *) malloc(sizeof(node));
+	temp->data = data;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
+}
+
+int Max(int left, int right)
+{
+	if (left < right)
+	{
+		return right;
+	}
+	else
+	{
+		return left;
+	}
+}
+int HeightOfBinaryTree(struct node* root)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		left=HeightOfBinaryTree(root->left);
+		right=HeightOfBinaryTree(root->right);
+		return r = Max(left ,right) + 1;
+	}
+}
+
+int main()
+{
+	root = Insert(10);
+	root->left = Insert(2);
+	root->left->left = Insert(6);
+	root->right = Insert(5);
+	root->right->left = Insert(8);
+	root->right->right = Insert(3);
+	root->right->right->right = Insert(3);
+	int result = HeightOfBinaryTree(root);
+	printf("%d ", result);
+	getchar();
+	return 0;
+}
+
+

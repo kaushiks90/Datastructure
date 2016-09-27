@@ -1,0 +1,81 @@
+
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* next;
+}node;
+struct node* top = NULL;
+bool IsEmpty()
+{
+	struct node*temp = top;
+	if (top == NULL)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+void Push(int x)
+{
+	struct node* temp;
+	temp = (struct node*)malloc(sizeof(struct node));
+	temp->data = x;
+	temp->next = NULL;
+	if (!IsEmpty())
+	{
+		temp->next = top;
+	}
+	top = temp;
+}
+void Pop()
+{
+	struct node*temp = top;
+	if (!IsEmpty())
+	{
+		top = temp->next;
+		free(temp);
+	}
+}
+
+void Front()
+{
+	struct node*temp = top;
+	if (!IsEmpty())
+	{
+		printf("\nFront element -> %d", temp->data);
+	}
+
+}
+void Print()
+{
+	struct node* temp = NULL;
+	temp = top;
+	while (temp != NULL)
+	{
+		printf("%d\n", temp->data);
+		temp = temp->next;
+	}
+	printf("\n");
+}
+int main()
+{
+	Push(5);
+	Push(10);
+	Push(15);
+	Print();
+	Pop();
+	Print();
+	Front();
+	getchar();
+	return 0;
+}
+
+

@@ -1,0 +1,78 @@
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}node;
+struct node* root = NULL;
+struct node* CreateNode(node* root, int value)
+{
+	struct node* temp = (struct node*)malloc(sizeof(struct node));
+	temp->data = value;
+	temp->left = NULL;
+	temp->right = NULL;
+	root = temp;
+	return root;
+}
+void InOrder(struct node* root)
+{
+	if (root != NULL)
+	{
+		InOrder(root->left);
+		printf("%d \n", root->data);
+		InOrder(root->right);
+	}
+}
+int CheckIsBinarySearchTree(struct node* root,int min,int max)
+{
+	if (root == NULL)
+	{
+		return 1;
+	}
+	if (root->data<min || root->data>max)
+	{
+		return 0;
+	}
+	
+	int left = CheckIsBinarySearchTree(root->left, min, root->data);
+	int right= CheckIsBinarySearchTree(root->right, root->data, max);
+	int result = left&&right;
+	return result;
+	
+}
+int main()
+{
+	root = CreateNode(root, 10);
+	root->left = CreateNode(root, -10);
+	root->right = CreateNode(root, 30);
+	root->right->left = CreateNode(root, 25);
+	root->right->left->right = CreateNode(root, 28);
+	root->right->right = CreateNode(root, 60);
+	root->right->right->right = CreateNode(root, 78);
+	root->left->right = CreateNode(root, 8);
+	root->left->right->left = CreateNode(root, 6);
+	root->left->right->right = CreateNode(root, 9);
+	InOrder(root);
+	
+	int result= CheckIsBinarySearchTree(root,-100,10000);
+	if (result == 1)
+	{
+		printf("\n%s\n", "Binary search tree");
+	}
+	else
+	{
+		printf("\n%s\n", "Not Binary search tree");
+
+	}
+	
+
+	getchar();
+	return 0;
+}
+
+

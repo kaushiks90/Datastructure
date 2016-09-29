@@ -1,0 +1,89 @@
+#include "stdafx.h"
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#define MAX_SIZE 101
+int arr[MAX_SIZE];
+int top = 0;
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}node;
+struct node* root = NULL;
+struct node* Insert(int data)
+{
+	node *temp = (node *)malloc(sizeof(node));
+	temp->data = data;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
+}
+int LeafToRootSum(node* root, int sum)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	else if (root->left == NULL && root->right == NULL)
+	{
+		if (root->data == sum)
+		{
+			arr[top] = root->data;
+			top++;
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		if (LeafToRootSum(root->left, sum - root->data))
+		{
+			arr[top] = root->data;
+			top++;
+			return 1;
+		}
+		if (LeafToRootSum(root->right, sum - root->data))
+		{
+			arr[top] = root->data;
+			top++;
+			return 1;
+		}
+	}
+}
+
+int main()
+{
+	root = Insert(10);
+	root->left = Insert(2);
+	root->left->left = Insert(7);
+	root->right = Insert(5);
+	root->right->left = Insert(8);
+	root->right->right = Insert(3);
+	root->right->right->right = Insert(3);
+	int result = LeafToRootSum(root, 21);
+	if (result == 1)
+	{
+		printf("Sum Found\n");
+		int i = 0;
+		for ( i = 1; i < sizeof(arr)/sizeof(arr[0]); i++)
+		{
+			if (arr[i] != NULL)
+			{
+				printf("%d\n", arr[i]);
+			}
+		}
+	}
+	else
+	{
+		printf("Sum Not Found");
+	}
+	getchar();
+	return 0;
+}
+
+

@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LinqConsoleApplication
+{
+    public class Node
+    {
+        public int data;
+        public Node left;
+        public Node right;
+    }
+    class operation
+    {
+        public Node insertion(ref Node root, int data)
+        {
+            Node temp = new Node();
+            temp.data = data;
+            temp.left = null;
+            temp.right = null;
+            root = temp;
+            return root;
+        }
+        public void PreOrder(Node root)
+        {
+            if (root == null)
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine(root.data);
+                PreOrder(root.left);
+                PreOrder(root.right);
+            }
+        }
+        public void PreOrderIterative(Node root)
+        {
+            Stack<Node> s1 = new Stack<Node>();
+            if (root == null)
+            {
+                return;
+            }
+            else
+            {
+                s1.Push(root);
+                while (s1.Count > 0)
+                {
+                    Node current = s1.Pop();
+                    Console.WriteLine(current.data);
+                    if (current.right != null)
+                    {
+                        s1.Push(current.right);
+                    }
+                    if (current.left != null)
+                    {
+                        s1.Push(current.left);
+                    }
+                }
+            }
+        }
+    }
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Node root = null;
+            operation op = new operation();
+            op.insertion(ref root, 10);
+            op.insertion(ref root.left, 5);
+            op.insertion(ref root.left.left, 0);
+            op.insertion(ref root.left.right, 7);
+            op.insertion(ref root.right, 15);
+            op.insertion(ref root.right.left, 2);
+            op.insertion(ref root.right.right, 6);
+            op.PreOrder(root);
+            Console.WriteLine("\nIterative Solution\n");
+            op.PreOrderIterative(root);
+            Console.ReadLine();
+        }
+
+    }
+}

@@ -1,0 +1,105 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LinqConsoleApplication
+{
+    public class Node
+    {
+        public int data;
+        public Node left;
+        public Node right;
+    }
+    class operation
+    {
+        public Node insertion(ref Node root, int data)
+        {
+            Node temp = new Node();
+            temp.data = data;
+            temp.left = null;
+            temp.right = null;
+            root = temp;
+            return root;
+        }
+        public void PreOrder(Node root)
+        {
+            if (root == null)
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine(root.data);
+                PreOrder(root.left);
+                PreOrder(root.right);
+            }
+        }
+        public void LevelOrderTraversalkelements(Node root,int k)
+        {
+            int count = 0;
+            Queue<Node> q1 = new Queue<Node>();
+            q1.Enqueue(root);
+            q1.Enqueue(null);
+            while (q1.Count > 0)
+            {
+                Node current = q1.Dequeue();
+                if (current != null)
+                {
+                    if (count == k)
+                    {
+                        Console.WriteLine(current.data);
+                    }
+                    if (count > k)
+                    {
+                        break;
+                    }
+                    if (current.left != null)
+                    {
+                        q1.Enqueue(current.left);
+                    }
+                    if (current.right != null)
+                    {
+                        q1.Enqueue(current.right);
+                    }
+                }
+                else if (q1.Count == 0)
+                {
+                    break;
+                }
+                else if (current == null)
+                {
+                    Console.WriteLine("\n");
+                    q1.Enqueue(null);
+                    count++;
+
+                }
+
+            }
+
+        }
+    }
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Node root = null;
+            operation op = new operation();
+            op.insertion(ref root, 10);
+            op.insertion(ref root.left, 5);
+            op.insertion(ref root.left.left, 0);
+            op.insertion(ref root.left.right, 7);
+            op.insertion(ref root.right, 15);
+            op.insertion(ref root.right.left, 2);
+            op.insertion(ref root.right.right, 6);
+            op.PreOrder(root);
+            Console.WriteLine("\n Enter k");
+            int k = Convert.ToInt32(Console.ReadLine());
+            op.LevelOrderTraversalkelements(root, k);
+            Console.ReadLine();
+        }
+
+    }
+}

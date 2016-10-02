@@ -1,0 +1,132 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Node root = null;
+            operation op = new operation();
+            op.insertion(ref root, 10);
+            op.insertion(ref root.left, 5);
+            op.insertion(ref root.left.left, 0);
+            op.insertion(ref root.left.right, 7);
+            op.insertion(ref root.right, 15);
+            op.insertion(ref root.right.left, 2);
+            op.insertion(ref root.right.right, 6);
+            op.PreOrder(root);
+            Console.WriteLine("Level Order Using 2Queues\n");
+            op.LevelOrderTraversalUsing2Queues(root);
+            Console.WriteLine("Level Order Using 1Queue\n");
+            op.LevelOrderTraversalUsing1Queue(root);
+            Console.ReadLine();
+        }
+    }
+    public class Node
+    {
+        public int data;
+        public Node left;
+        public Node right;
+    }
+    class operation
+    {
+        public Node insertion(ref Node root, int data)
+        {
+            Node temp = new Node();
+            temp.data = data;
+            temp.left = null;
+            temp.right = null;
+            root = temp;
+            return root;
+        }
+        public void PreOrder(Node root)
+        {
+            if (root == null)
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine(root.data);
+                PreOrder(root.left);
+                PreOrder(root.right);
+            }
+        }
+        public void LevelOrderTraversalUsing2Queues(Node root)
+        {
+            Queue<Node> q1 = new Queue<Node>();
+            Queue<Node> q2 = new Queue<Node>();
+
+            q1.Enqueue(root);
+            while (q1.Count != 0 || q2.Count != 0)
+            {
+                while (q1.Count > 0)
+                {
+                    root = q1.Dequeue();
+                    Console.WriteLine(root.data);
+                    if (root.left != null)
+                    {
+                        q2.Enqueue(root.left);
+                    }
+                    if (root.right != null)
+                    {
+                        q2.Enqueue(root.right);
+                    }
+                }
+                Console.WriteLine("\n");
+                while (q2.Count > 0)
+                {
+                    root = q2.Dequeue();
+                    Console.WriteLine(root.data);
+                    if (root.left != null)
+                    {
+                        q1.Enqueue(root.left);
+                    }
+                    if (root.right != null)
+                    {
+                        q1.Enqueue(root.right);
+                    }
+                }
+                Console.WriteLine("\n");
+            }
+        }
+        public void LevelOrderTraversalUsing1Queue(Node root)
+        {
+            Queue<Node> q1 = new Queue<Node>();
+            q1.Enqueue(root);
+            q1.Enqueue(null);
+            while (q1.Count > 0)
+            {
+                Node current = q1.Dequeue();
+                if (current != null)
+                {
+                    Console.WriteLine(current.data);
+                    if (current.left != null)
+                    {
+                        q1.Enqueue(current.left);
+                    }
+                    if (current.right != null)
+                    {
+                        q1.Enqueue(current.right);
+                    }
+                }
+                else if (q1.Count == 0)
+                {
+                    break;
+                }
+                else if (current == null)
+                {
+                    Console.WriteLine("\n");
+                    q1.Enqueue(null);
+                }
+                
+            }
+        }
+    }
+}

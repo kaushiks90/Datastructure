@@ -1,0 +1,79 @@
+/*Program to reverse a Linked list using iterative
+ * Create a next,prev and current:next always points to next address of the list:Prev at the start is null and then points to prev addr of the list .Every
+ * time the current is reduced by 1 . 
+ * Input :5 1 9   -->Output :After Reversing using iterative method 9 1 5
+ */
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace DataStructure
+{
+    class Node
+    {
+        public int data;
+        public Node next;
+    }
+    class Operation
+    {
+        public void Insert(ref Node head, int data)
+        {
+            Node temp = new Node();
+            temp.data = data;
+
+            if (head == null)
+            {
+                temp.next = null;
+                head = temp;
+            }
+            else
+            {
+                temp.next = head;
+                head = temp;
+            }
+
+        }
+
+        public void PrintElements(Node node)
+        {
+            Node temp = node;
+            while (temp != null)
+            {
+                Console.WriteLine("\n{0}", temp.data);
+                temp = temp.next;
+            }
+        }
+        public Node ReverseIterative(Node node)
+        {
+            Node prev, next, current;
+            current = node;
+            prev = null;
+            while(current!=null)
+            {
+                next = current.next;
+                current.next = prev;
+                prev = current;
+                current = next;
+            }
+            return prev;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Node head = null;
+            Operation op = new Operation();
+            op.Insert(ref head, 5);
+            op.Insert(ref head, 1);
+            op.Insert(ref head, 9);
+            op.PrintElements(head);
+            head=op.ReverseIterative(head);
+            Console.WriteLine("\n After reversing using iterative method\n");
+            op.PrintElements(head);
+            Console.ReadLine();
+        }
+    }
+}
